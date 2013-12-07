@@ -1,5 +1,3 @@
-## The REST Adapter
-
 By default, your store will use `DS.RESTAdapter` to load and save
 records. The REST adapter assumes that the URLs and JSON associated with
 each model are conventional; this means that, if you follow the rules,
@@ -36,17 +34,15 @@ REST adapter:
 
 #### Pluralization Customization
 
-Irregular pluralizations can be specified via the adapter's `configure`
-API:
+Irregular or uncountable pluralizations can be specified via `Ember.Inflector.inflector`:
 
 ```js
-DS.RESTAdapter.configure("plurals", {
-  person: "people"
-});
+Ember.Inflector.inflector.irregular('formula', 'formulae');
+Ember.Inflector.inflector.uncountable('advice');
 ```
 
-This will tell the REST adapter that requests for `App.Person` requests
-should go to `/people/1` instead of `/persons/1`.
+This will tell the REST adapter that requests for `App.Formula` requests
+should go to `/formulae/1` instead of `/formulas/1`.
 
 #### Endpoint Path Customization
 
@@ -63,11 +59,11 @@ Requests for `App.Person` would now target `/api/1/people/1`.
 
 #### Host Customization
 
-An adapter can target other hosts by setting the `url` property.
+An adapter can target other hosts by setting the `host` property.
 
 ```js
 DS.RESTAdapter.reopen({
-  url: 'https://api.example.com'
+  host: 'https://api.example.com'
 });
 ```
 
@@ -212,11 +208,11 @@ In some circumstances, the built in attribute types of `string`,
 `number`, `boolean`, and `date` may be inadequate. For example, a
 server may return a non-standard date format.
 
-The `RESTAdapter`, like any Ember adapter, can have new transforms
+Ember Data can have new JSON transforms
 registered for use as attributes:
 
 ```js
-DS.RESTAdapter.registerTransform('coordinatePoint', {
+App.CoordinatePointTransform = DS.Transform.extend({
   serialize: function(value) {
     return [value.get('x'), value.get('y')];
   },

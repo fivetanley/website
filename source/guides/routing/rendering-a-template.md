@@ -1,5 +1,3 @@
-## Rendering a Template
-
 One of the most important jobs of a route handler is rendering the
 appropriate template to the screen.
 
@@ -80,8 +78,8 @@ If you want to render two different templates into outlets of two different rend
 App.PostRoute = App.Route.extend({
   renderTemplate: function() {
     this.render('favoritePost', {   // the template to render
-      into: 'posts',                // the template to render into
-      outlet: 'posts',              // the name of the outlet in that template
+      into: 'posts',                // the route to render into
+      outlet: 'posts',              // the name of the outlet in the route's template
       controller: 'blogPost'        // the controller to use for the template
     });
     this.render('comments', {
@@ -92,19 +90,3 @@ App.PostRoute = App.Route.extend({
   }
 });
 ```
-
-## Rendering Warning
-
-When a template tries to render, and the parent route did not render a
-template, then you will see this warning:
-
-"The immediate parent route did not render into the main outlet ..."
-
-This means that the current route tried to render into the parent
-route's template, but the parent route didn't render a template, or, if
-it did, that the template which the parent route provided did not render
-into the main template (i.e., a default `{{outlet}}`).
-
-Ember provides this warning because it expects that you will want to
-render into the main template.
-

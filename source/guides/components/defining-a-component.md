@@ -1,6 +1,12 @@
 To define a component, create a template whose name starts with
-`components/`. To define a new component `{{blog-post}}`, for example,
+`components/`. To define a new component, `{{blog-post}}` for example,
 create a `components/blog-post` template.
+
+<aside>
+  **Note:** Components must have a dash in their name. So `blog-post` is an acceptable name,
+  but `post` is not. This prevents clashes with current or future HTML element names, and
+  ensures Ember picks up the components automatically.
+</aside>
 
 If you are including your Handlebars templates inside an HTML file via
 `<script>` tags, it would look like this:
@@ -28,7 +34,7 @@ component of the same name. Given the above template, you can now use the
 
 <a class="jsbin-embed" href="http://jsbin.com/ifuxey/1/embed?live,html">JS Bin</a><script src="http://static.jsbin.com/js/embed.js"></script>
 
-Each component, under the hood, is backed by an element. By default,
+Each component, under the hood, is backed by an element. By default
 Ember will use a `<div>` element to contain your component's template.
 To learn how to change the element Ember uses for your component, see
 [Customizing a Component's
@@ -43,8 +49,8 @@ those cases, you do not need to write any JavaScript at all. Just define
 the Handlebars template as described above and use the component that is
 created.
 
-If you need to customize the behavior of the component, however, you'll
-need to define a subclass of `Ember.Component. For example, you would
+If you need to customize the behavior of the component you'll
+need to define a subclass of `Ember.Component`. For example, you would
 need a custom subclass if you wanted to change a component's element,
 respond to actions from the component's template, or manually make
 changes to the component's element using JavaScript.

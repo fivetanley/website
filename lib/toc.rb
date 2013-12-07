@@ -1,4 +1,5 @@
 require 'redcarpet'
+require 'pry'
 
 module TOC
   class << self
@@ -42,6 +43,8 @@ module TOC
         }
 
         entries.each do |entry|
+          next if entry[:skip_sidebar_item]
+
           current_segment = entry.url.split("/")[1]
 
           sub_current = if current_segment and current_segment == sub_url
@@ -84,9 +87,8 @@ module TOC
       return if name.blank?
 
       %Q{
-        <h1>#{name} 
-          <a href="#{chapter_github_source_url}" target="_blank" class="edit-page">
-            Edit Page</a>
+        <h1>#{name}
+          <a href="#{chapter_github_source_url}" target="_blank" class="edit-page icon-pencil">Edit Page</a>
         </h1>
       }
     end
@@ -119,7 +121,7 @@ module TOC
     end
 
     def current_guide
-      if guide_slug == 'index.html'
+      if guide_slug == '' && section_slug == 'index.html'
         current_section[1][0]
       else
         current_section[1].find do |guide|
@@ -164,11 +166,19 @@ module TOC
       }
       elsif whats_next = next_guide
         next_chapter = whats_next[1][0]
-        %Q{
-          <a class="next-guide" href="/guides/#{next_chapter.url}">
-             We're done with #{current_section[0]}. Next up: #{whats_next[0]} - #{next_chapter.title} \u2192
-          </a>
-        }
+        if section_slug == 'index.html'
+          %Q{
+            <a class="next-guide" href="/guides/#{next_chapter.url}">
+              #{next_chapter.title} \u2192
+            </a>
+          }
+        else
+          %Q{
+            <a class="next-guide" href="/guides/#{next_chapter.url}">
+               We're done with #{current_section[0]}. Next up: #{whats_next[0]} - #{next_chapter.title} \u2192
+            </a>
+          }
+        end
       else
         ''
       end
@@ -246,15 +256,31 @@ module TOC
 
 
     WARNINGS = {
-        "ember-data"=>  %Q{
+        "canary"=>  %Q{
           <div class="under_construction_warning">
-            <h1>
+            <h3>
               <div class="msg">
-                Warning: ember-data is a work in progress and under rapid development.
-                <br/>
-                <span class="more_caution">Use with caution!!!</span>
+                WARNING: this guide refers to a feature only available in canary (nightly/unstable) builds of Ember.js.
               </div>
-            </h1>
+            </h3>
+          </div>
+        },
+        "canary-data"=>  %Q{
+          <div class="under_construction_warning">
+            <h3>
+              <div class="msg">
+                WARNING: this guide refers to a feature only available in canary (nightly/unstable) builds of Ember Data.
+              </div>
+            </h3>
+          </div>
+        },
+        "query-params-warning"=> %Q{
+          <div class="under_construction_warning">
+            <h3>
+              <div class="msg">
+                <strong>WARNING:</strong> query params are an experimental feature. You must be using a recent canary build of Ember, and enable the <code>query-params</code> feature flag. For more info on enabling feature flags visit <a href="http://emberjs.com/guides/configuring-ember/feature-flags/">the Feature Flags guide</a>
+              </div>
+            </h3>
           </div>
         }
     }

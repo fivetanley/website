@@ -27,8 +27,8 @@ App.NavigationBarComponent = Ember.Component.extend({
 ```handlebars
 {{! templates/components/navigation-bar }}
 <ul>
-  <li>{{#linkTo 'home'}}Home{{/linkTo}}</li>
-  <li>{{#linkTo 'about'}}About{{/linkTo}}</li>
+  <li>{{#link-to 'home'}}Home{{/link-to}}</li>
+  <li>{{#link-to 'about'}}About{{/link-to}}</li>
 </ul>
 ```
 
@@ -93,7 +93,7 @@ This would render this HTML:
 <div class="ember-view disabled">
 ```
 
-You can also specify a class should only be added when the property is
+You can also specify a class which should only be added when the property is
 `false` by declaring `classNameBindings` like this:
 
 ```javascript

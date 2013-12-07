@@ -1,5 +1,3 @@
-## Classes and Instances
-
 To define a new Ember _class_, call the `extend()` method on
 `Ember.Object`:
 
@@ -60,7 +58,7 @@ instances:
 
 ```javascript
 var person = Person.create();
-person.say("Hello") // alerts "Hello"
+person.say("Hello") // alerts " says: Hello"
 ```
 
 When creating an instance, you can initialize the value of its properties
@@ -87,8 +85,8 @@ define new ones. You should only set simple properties when calling
 properties, create a new subclass and instantiate that.
 
 By convention, properties or variables that hold classes are
-capitalized, while instances are not. So, for example, the variable
-`Person` would contain a class, while `person` would contain an instance
+CamelCased, while instances are not. So, for example, the variable
+`Person` would point to a class, while `person` would point to an instance
 (usually of the `Person` class). You should stick to these naming
 conventions in your Ember applications.
 

@@ -1,6 +1,6 @@
-## Links (The `{{linkTo}}` Helper)
+## The `{{link-to}}` Helper
 
-You create a link to a route using the `{{linkTo}}` helper.
+You create a link to a route using the `{{link-to}}` helper.
 
 ```js
 App.Router.map(function() {
@@ -11,11 +11,11 @@ App.Router.map(function() {
 ```
 
 ```handlebars
-<!-- photos.handlebars -->
+{{! photos.handlebars }}
 
 <ul>
 {{#each photo in photos}}
-  <li>{{#linkTo 'photos.edit' photo}}{{photo.title}}{{/linkTo}}</li>
+  <li>{{#link-to 'photos.edit' photo}}{{photo.title}}{{/link-to}}</li>
 {{/each}}
 </ul>
 ```
@@ -35,7 +35,7 @@ When the rendered link matches the current route, and the same
 object instance is passed into the helper, then the link is given
 `class="active"`.
 
-The `{{linkTo}}` helper takes:
+The `{{link-to}}` helper takes:
 
 * The name of a route. In this example, it would be `index`, `photos`, or
   `photos.edit`.
@@ -43,6 +43,18 @@ The `{{linkTo}}` helper takes:
   By default, Ember.js will replace each segment with the
   value of the corresponding object's `id` property.
 * An optional title which will be bound to the `a` title attribute
+
+If there is no model to pass to the helper, you can provide an explicit identifier value instead.
+The value will be filled into the [dynamic segment](/guides/routing/defining-your-routes/#toc_dynamic-segments)
+of the route, and will make sure that the `model` hook is triggered.
+
+```handlebars
+{{! photos.handlebars }}
+
+{{#link-to 'photo.edit' 1}}
+  First Photo Ever
+{{/link-to}}
+```
 
 ### Example for Multiple Segments
 
@@ -67,7 +79,7 @@ App.Router.map(function() {
   {{body}}
 </div>
 
-<p>{{#linkTo 'photo.comment' primaryComment}}Main Comment{{/linkTo}}</p>
+<p>{{#link-to 'photo.comment' primaryComment}}Main Comment{{/link-to}}</p>
 ```
 
 If you specify only one model, it will represent the innermost dynamic segment `:comment_id`.
@@ -77,9 +89,9 @@ Alternatively, you could pass both a photo and a comment to the helper:
 
 ```handlebars
 <p>
-  {{#linkTo 'photo.comment' nextPhoto primaryComment}}
+  {{#link-to 'photo.comment' nextPhoto primaryComment}}
     Main Comment for the Next Photo
-  {{/linkTo}}
+  {{/link-to}}
 </p>
 ```
 

@@ -1,5 +1,3 @@
-## Displaying a List of Items
-
 If you need to enumerate over a list of objects, use Handlebars' `{{#each}}` helper:
 
 ```handlebars
@@ -39,7 +37,7 @@ access a property from the outer scope within the loop.
   {{#each friend in friends}}
     <li>{{name}}'s friend {{friend.name}}</li>
   {{/each}}
-<ul>
+</ul>
 ```
 
 This would print a list like this:
